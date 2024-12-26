@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home - PhotoGallery</title>
+    <script type="text/javascript">
+        (function() {
+            var css = document.createElement('link');
+            css.href = 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+            css.rel = 'stylesheet';
+            css.type = 'text/css';
+            document.getElementsByTagName('head')[0].appendChild(css);
+        })();
+    </script>
+    <link rel="stylesheet" href="pages/assets/css/app.css">
+    <link rel="stylesheet" href="pages/assets/css/theme.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const photoDirectory = 'pages/photos/';
+            const imageContainer = document.querySelector('.card-columns');
+            
+            // Fetch the list of images from the server
+            fetch(photoDirectory)
+                .then(response => response.text())
+                .then(data => {
+                    // Parse the response to extract image file names
+                    const parser = new DOMParser();
+                    const htmlDoc = parser.parseFromString(data, 'text/html');
+                    const links = htmlDoc.querySelectorAll('a');
+                    
+                    links.forEach(link => {
+                        const imgSrc = photoDirectory + link.getAttribute('href');
+                        if (imgSrc.endsWith('.jpg') || imgSrc.endsWith('.png') || imgSrc.endsWith('.jpeg')) {
+                            const card = document.createElement('div');
+                            card.className = 'card card-pin';
+                            card.innerHTML = `
+                                <img class="card-img" src="${imgSrc}" alt="Card image">
+                                <div class="overlay">
+                                    
+                                    <div class="more">
+                                        <a href="pages/signup.php">
+                                            <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> More
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                            imageContainer.appendChild(card);
+                        }
+                    });
+                })
+                .catch(error => console.error('Error loading images:', error));
+        });
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <a class="navbar-brand font-weight-bolder mr-3" href="#"><img src="pages/assets/img/logo.png"></a>
+        <button class="navbar-light navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsDefault">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/signup.php">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/login.php">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main role="main">
+        <section class="mt-4 mb-5">
+            <div class="container mb-4">
+                <h1 class="font-weight-bold title">Explore</h1>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="card-columns">
+                       
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="pages/assets/js/app.js"></script>
+    <script src="pages/assets/js/theme.js"></script>
+    
+    <footer class="footer pt-5 pb-5 text-center">
+        <div class="container">
+            <div class="socials-media">
+                <ul class="list-unstyled">
+                    <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-facebook"></i></a></li>
+                    <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-twitter"></i></a></li>
+                    <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-instagram"></i></a></li>
+                    <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-google-plus"></i></a></li>
+                    <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-behance"></i></a></li>
+                    <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-dribbble"></i></a></li>
+                </ul>
+            </div>
+            <p>©  <span class="credits font-weight-bold">        
+                <a target="_blank" class="text-dark" href="#"><u>Made By Saif Ur Rehman And Talha Tanveer</u></a>
+            </span>
+            </p>
+        </div>
+    </footer>    
+</body>
+</html>
